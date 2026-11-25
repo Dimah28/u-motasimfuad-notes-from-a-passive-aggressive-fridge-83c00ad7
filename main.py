@@ -2,8 +2,9 @@
 """Notes From a Passive-Aggressive Fridge.
 
 Writes one passive-aggressive note from a smart fridge to its owner
-to /output/entry.txt. Pure Python standard library, deterministic:
-the same single line is written on every run.
+to entry.txt in the output directory: $MAKEFUN_OUTPUT_DIR when the
+grader sets it, /output otherwise. Pure Python standard library,
+deterministic: the same single line is written on every run.
 """
 
 import os
@@ -13,10 +14,12 @@ ENTRY = (
     "ice cream is soup. I have the footage."
 )
 
+OUTPUT_DIR = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+
 
 def main() -> None:
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8", newline="\n") as f:
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    with open(os.path.join(OUTPUT_DIR, "entry.txt"), "w", encoding="utf-8", newline="\n") as f:
         f.write(ENTRY)
 
 
